@@ -1,18 +1,18 @@
 # Working with Containers
 
 ## General Commands
-docker container --help
-ls - list all running containers (add -a to list stopped containers too)
-run - create and run a new container (different from create which only creates but doesnt run)
-attach - attaches to a running container (attaches to local standard input, output, and error streams to a running container)
-exec - executes a command in a running container
-start - starts a stopped container
-stop - stops a running container
-inspect - provides details about a container (network, volmes, etc)
-rm - deletes a stopped container
-prune - deletes all stopped containers
-top - display running processes of a container
-logs - show logs from the container
+```docker container --help```
+* **ls**:list all running containers (add -a to list stopped containers too)
+* **run**:create and run a new container (different from create which only creates but doesnt run)
+* **attach**:attaches to a running container (attaches to local standard input, output, and error streams to a running container)
+* **exec**:executes a command in a running container
+* **start**:starts a stopped container
+* **stop**:stops a running container
+* **inspect**:provides details about a container (network, volmes, etc)
+* **rm**:deletes a stopped container
+* **prune**:deletes all stopped containers
+* **top**:display running processes of a container
+* **logs**:show logs from the container
 
 ## Creating Containers (simple)
 1. Create and run a container```docker container run [image]```
