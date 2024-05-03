@@ -100,13 +100,109 @@ vim Dockerfile
     --build -arg SRC_DIR=/var/code \
     .
 ```
-* Create the docker container
-```sh
-    docker container run -d \
-    --name weather-app3 \
-    -p 8085:3000 \
-   linuxacademy/weather-app:v3
+
+<span style="color:red">TODO >>> try with another image</span>
+
+### Build an image for a container with Non-priviledge user
+```dockerfile
+    FROM centos:latest
+    RUN useradd -ms /bin/bash cloud_user
+    USER cloud_user
+    # after this, any instruction created will be executed as user cloud_user
 ```
 
-# TODO
-try with another image 
+### Order of Execution
+* Setup your environment:
+```sh
+    cd docker_images
+    mkdir centos-conf
+    cd centos-conf
+```
+* Create the Dockerfile:
+`vi Dockerfile`
+* Dockerfile contents:
+```dockerfile
+    # Creates a CentOS image that uses cloud_user as a non-privileged user
+    FROM centos:latest
+    RUN mkdir -p ~/new-dir1
+    RUN mkdir -p /etc/myconf
+    RUN echo "Some config data" >> /etc/myconf/my.conf
+    RUN useradd -ms /bin/bash cloud_user
+    USER cloud_user      # if the above line was not added then cloud_user would not exist hence this would fail
+    RUN mkdir -p ~/new-dir2
+```
+
+### Volume Instruction
+* Set only one volume
+```dockerfile
+    FROM nginx:latest
+    VOLUME ["/usr/share/nginx/html/"]
+```
+* Set multiple volumes
+```dockerfile
+    FROM nginx:latest
+    VOLUME ["/usr/share/nginx/html/", "/etc/myconf/"]
+```
+
+### Entrypoint vs Command
+* `CMD` defines default command for a container, can be overriden
+* `ENTRYPOINT` defines a specific executable, cannot be overriden (unless using --entrypoint flag)
+```dockerfile
+    FROM node
+    LABEL org.label-schema.version=v1.1
+    ENV NODE_ENV="production"
+    ENV PORT 3001
+
+    RUN mkdir -p /var/node
+    ADD src/ /var/node/
+    WORKDIR /var/node
+    RUN npm install
+    EXPOSE $PORT
+    ENTRYPOINT ./bin/www    # executes ./bin/www
+```
+
+### .dockerignore
+* Setup your environment:
+```sh
+    cd docker_images
+    mkdir dockerignore
+    cd dockerignore
+    git clone https://github.com/linuxacademy/content-weather-app.git src
+    cd src
+    git checkout dockerignore
+    cd ../
+```
+* Create the .dockerignore file:
+```sh
+    vi .dockerignore
+```
+* Add the following to .dockerignore:
+```.dockerignore
+    # Ignore these files
+    */*.md
+    */.git
+    src/docs/
+    */tests/
+```
+* Create the Dockerfile:
+```sh
+    vi Dockerfile
+```
+* Dockerfile contents:
+```dockerfile
+    # Create an image for the weather-app
+    FROM node
+    LABEL org.label-schema.version=v1.1
+    ENV NODE_ENV="production"
+    ENV PORT 3000
+
+    RUN mkdir -p /var/node
+    ADD src/ /var/node/
+    WORKDIR /var/node
+    RUN npm install
+    EXPOSE $PORT
+    ENTRYPOINT ["./bin/www"]
+```
+* Build the image
+* Create the weather-app container
+* List the contents of /var/node, you wont see the files there
