@@ -39,3 +39,5 @@
 1. Delete container ```docker container rm [container_name] -f```
 2. Delete containers ```docker container rm [container_name1] [container_name2] -f```
 3. Prune containers ```docker container prune```
+
+## Advance Managing Containers
