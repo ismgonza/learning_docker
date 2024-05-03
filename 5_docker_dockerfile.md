@@ -6,10 +6,10 @@
 
 ### Dockerfile Example
 ```dockerfile
-    FROM ubuntu:22.04
-    COPY . /app
-    RUN make /app
-    CMD python /app/app.py
+FROM ubuntu:22.04
+COPY . /app
+RUN make /app
+CMD python /app/app.py
 ```
 
 In the example above, each instruction creates one layer:

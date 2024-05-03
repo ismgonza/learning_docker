@@ -1,7 +1,7 @@
 # Working with Images
 
 ## General Commands
-```docker image --help```
+`docker image --help`
 * **ls**: list all available, or pulled images
 * **pull**: pulls or downloads a docker image from a registry
 * **push**: pushes or uploads a docker image to a registry
