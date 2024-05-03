@@ -40,4 +40,13 @@
    [nw_name]
    ```
    * Lets say we are going to have a parent network /16 and split it into smaller networks /24
-     * `docker network create --subnet 10.1.0.0/16 --gateway 10.1.0.1 --ip-range=10.1.1.0/24 --driver=bridge --label=network_1 my_network` -- Review why i cannot create other subnets aftewards
+      ```sh
+      docker network create \
+      --subnet 10.1.0.0/16 \
+      --gateway 10.1.0.1 \
+      --ip-range=10.1.1.0/24 \
+      --driver=bridge \
+      --label=network_1 \
+      my_network
+      ```
+    -> Review why i cannot create other subnets aftewards
