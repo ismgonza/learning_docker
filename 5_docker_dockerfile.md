@@ -38,20 +38,75 @@ In the example above, each instruction creates one layer:
 ```sh
 mkdir weather-app
 cd weather-app
-vim dockerfile
+vim Dockerfile
 ```
 * Create the dockerfile
 ```dockerfile
 # Create Image from weather-app
-FROM node
-LABEL org.company.version=v1.1
-RUN mkdir -p /var/node
-ADD src/ /var/node/        # copies files from src/ to /var/node/
-WORKDIR /var/node
-RUN npn install
-EXPOSE 3000
-CMD ./bin/www
+    FROM node
+    LABEL org.company.version=v1.1
+    RUN mkdir -p /var/node
+    ADD src/ /var/node/        # copies files from src/ to /var/node/
+    WORKDIR /var/node
+    RUN npm install
+    EXPOSE 3000
+    CMD ./bin/www
 ```
 * Build the image, use -t to specify the name and tag of the image
 `docker image build -t linuzacademy/weather-app:v1 .`
 
+### Using ENVironments Variables
+* Lets say we want to create two similar containers but one for DEV and one for PROD
+```dockerfile
+    FROM node
+    LABEL org.company.version=v1.1
+    ENV NODE_ENV="development"
+    ENV PORT 3000
+    RUN mkdir -p /var/node
+    ADD src/ /var/node/
+    WORKDIR /var/node
+    RUN npm install
+    EXPOSE $PORT
+    CMD ./bin/www
+```
+* Build the image
+  `docker image build -t linuxacademy/weather-app:v2 .`
+* If i want to change any of the env variables when running the container i can do:
+```sh
+    docker container run -d \
+    --name weather-app2 \
+    -p 8082:3001 \
+    --env PORT=3001 \
+    --env NODE_ENV=production \
+    linuxacademy/weather-app:v2
+```
+
+### Using ARGuments
+```dockerfile
+    FROM node
+    LABEL org.company.version=v1.1
+    ARG SRC_DIR=/var/node
+    RUN mkdir -p $SRC_DIR
+    ADD src/ $SRC_DIR
+    WORKDIR $SRC_DIR
+    RUN npm install
+    EXPOSE $PORT
+    CMD ./bin/www
+```
+* Change arguments when building the image
+```sh
+    docker image build -t \
+    linuxacademy/weather-app:v3 \
+    --build -arg SRC_DIR=/var/code \
+    .
+```
+* Create the docker container
+```sh
+    docker container run -d \
+    --name weather-app3 \
+    -p 8085:3000 \
+   linuxacademy/weather-app:v3
+```
+
+# TODO
+try with another image 
