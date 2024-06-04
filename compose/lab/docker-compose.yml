@@ -1,0 +1,47 @@
+services:
+  weather-app1:
+    build:
+      context: ./weather-app
+      args:
+        - VERSION=v2.0
+    ports:
+      - "8080:3000"
+    networks:
+     - weather_app
+    environment:
+      - NODE_ENV=production
+  weather-app2:
+    build:
+      context: ./weather-app
+      args:
+        - VERSION=v2.0
+    ports:
+      - "8081:3000"
+    networks:
+     - weather_app
+    environment:
+      - NODE_ENV=production
+  weather-app3:
+    build:
+      context: ./weather-app
+      args:
+        - VERSION=v2.0
+    ports:
+      - "8082:3000"
+    networks:
+     - weather_app
+    environment:
+      - NODE_ENV=production
+  nginx:
+      build: ./nginx
+      tty: true
+      ports:
+       - '80:80'
+      networks:
+       - frontend
+       - weather_app
+
+networks:
+  frontend:
+  weather_app:
+    internal: true

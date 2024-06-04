@@ -46,6 +46,7 @@
   `docker container top [container_name]`
 * Docker Stats: Display lifestream of container resource usage statistics
   `docker container stats [container_name]`
+
 ### Auto-Restart Containers
 * To autorestart use the `--restart` flag when creating the container
 * Set one of the following options:
@@ -54,6 +55,7 @@
   * `--restart always`: always restart the container if it stops and then the docker daemon is restarted
   * `--restart unless-stopped`: similar to always except it does not restart the container if it is intentionally stopped
 * Syntax: `docker container run -d --name [container_name] --restart [restart_option] [image]`
+
 ### Docker Events
 * Get real-time events from the server
   `docker system events`
@@ -76,6 +78,7 @@
 * Documentation:
    * [docker events](https://docs.docker.com/reference/cli/docker/system/events/)
    * [Engine API v1.24](https://docs.docker.com/engine/api/v1.24/)
+
 ### Managing stopped containers
 * List the rm flags:
   `docker container rm -h`
@@ -89,6 +92,7 @@
   `docker container ls -a -q -f status=exited | wc -l`
 * Fin stopped weather-app containers with grep:
   `docker container ls -a -f status=exited | grep weather-app`
+
 ### Docker Portainer
 * In this lesson, we'll install Portainer and use it manage our Docker host.
 * Create a volume for Portainers data:
@@ -101,6 +105,7 @@
   -v portainer_data:/data portainer/portainer
   ```
 * Access the portainer by using localhost:8080
+
 ### Watchtower
 * To keep a container up-to-date when its image gets updated
 * Create Watchtower:

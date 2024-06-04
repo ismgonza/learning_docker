@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      mysql_internal:
+        aliases: ["db"]  # if not set, wp wont be able to find the db
+    environment:
+      MYSQL_ROOT_PASSWORD: P4ssw0rd0!
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: P4ssw0rd0!
+  blog:
+    depends_on:
+      - db               # alias set up before
+    image: wordpress:latest
+    networks:
+      mysql_internal:
+      wordpress_public:
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: P4ssw0rd0!
+
+volumes:
+  db_data:
+networks:
+  mysql_internal:
+    internal: true
+  wordpress_public:
