@@ -4,8 +4,6 @@
 * [Docker Bench Security](https://github.com/docker/docker-bench-security)
 * [Resource Constrains](https://docs.docker.com/config/containers/resource_constraints/)
 * [Runtime privilege and Linux capabilities](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities)
-* 
-
 
 ### Docker Namespaces
 * Process ID (pid)
